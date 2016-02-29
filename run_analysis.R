@@ -1,5 +1,5 @@
 
-
+#call required packages. 
 library("data.table")
 library("reshape2")
 
@@ -32,7 +32,6 @@ X_train <- read.table("./UCI HAR Dataset/train/X_train.txt")
 y_train <- read.table("./UCI HAR Dataset/train/y_train.txt")
 
 subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt")
-
 names(X_train) = features
 
 X_train = X_train[,extract_features]
@@ -44,13 +43,13 @@ names(subject_train) = "subject"
 
 train_data <- cbind(as.data.table(subject_train), y_train, X_train)
 
-# Merge test and train tables
+# Now, merge test and train tables
 data = rbind(test_data, train_data)
 
 id_labels   = c("subject", "Activity", "Activity_type")
 data_labels = setdiff(colnames(data), id_labels)
-melt_data      = melt(data, id = id_labels, measure.vars = data_labels)
+DATA      = melt(data, id = id_labels, measure.vars = data_labels)
 
-tidy_data   = dcast(melt_data, subject + Activity_type ~ variable, mean)
+Tidy_Data   = dcast(DATA, subject + Activity_type ~ variable, mean)
 
-write.table(tidy_data, file = "./tidy_data.txt")
+write.table(Tidy_Data, file = "./tidy_data.txt")
