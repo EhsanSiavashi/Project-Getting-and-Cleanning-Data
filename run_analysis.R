@@ -11,7 +11,7 @@ Activity_types <- read.table("./UCI HAR Dataset/Activity_types.txt")[,2]
 features <- read.table("./UCI HAR Dataset/features.txt")[,2]
 
 
-extract_features <- grepl("mean|std", features)
+mean_std_features <- grepl("mean|std", features)
 
 X_test <- read.table("./UCI HAR Dataset/test/X_test.txt")
 y_test <- read.table("./UCI HAR Dataset/test/y_test.txt")
@@ -19,7 +19,7 @@ subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 
 names(X_test) = features
 
-X_test = X_test[,extract_features]
+X_test = X_test[, mean_std_features]
 
 
 y_test[,2] = Activity_types[y_test[,1]]
@@ -34,7 +34,7 @@ y_train <- read.table("./UCI HAR Dataset/train/y_train.txt")
 subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 names(X_train) = features
 
-X_train = X_train[,extract_features]
+X_train = X_train[, mean_std_features]
 
 # Load activity data
 y_train[,2] = Activity_types[y_train[,1]]
