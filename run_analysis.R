@@ -4,19 +4,15 @@ library("data.table")
 library("reshape2")
 
 # We assume that the downloaded file is in the working directory.
-
+# Reading the required files.
 Activity_types <- read.table("./UCI HAR Dataset/Activity_types.txt")[,2]
-
-
 features <- read.table("./UCI HAR Dataset/features.txt")[,2]
-
-
-mean_std_features <- grepl("mean|std", features)
-
 X_test <- read.table("./UCI HAR Dataset/test/X_test.txt")
 y_test <- read.table("./UCI HAR Dataset/test/y_test.txt")
 subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 
+#selecting only the mean and std measures.
+mean_std_features <- grepl("mean|std", features)
 names(X_test) = features
 
 X_test = X_test[, mean_std_features]
@@ -44,11 +40,11 @@ names(subject_train) = "subject"
 train_data <- cbind(as.data.table(subject_train), y_train, X_train)
 
 # Now, merge test and train tables
-data = rbind(test_data, train_data)
+test_train_data = rbind(test_data, train_data)
 
 id_labels   = c("subject", "Activity", "Activity_type")
-data_labels = setdiff(colnames(data), id_labels)
-DATA      = melt(data, id = id_labels, measure.vars = data_labels)
+data_labels = setdiff(colnames(test_train_data), id_labels)
+DATA      = melt(test_train_data, id = id_labels, measure.vars = data_labels)
 
 Tidy_Data   = dcast(DATA, subject + Activity_type ~ variable, mean)
 
