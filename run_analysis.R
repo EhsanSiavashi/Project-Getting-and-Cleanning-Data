@@ -5,7 +5,7 @@ library("reshape2")
 
 # We assume that the downloaded file is in the working directory.
 # Reading the required files.
-Activity_types <- read.table("./UCI HAR Dataset/Activity_types.txt")[,2]
+Activity_types <- read.table("./UCI HAR Dataset/Activity_labels.txt")[,2]
 features <- read.table("./UCI HAR Dataset/features.txt")[,2]
 X_test <- read.table("./UCI HAR Dataset/test/X_test.txt")
 y_test <- read.table("./UCI HAR Dataset/test/y_test.txt")
